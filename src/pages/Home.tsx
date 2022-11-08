@@ -73,13 +73,18 @@ export function Home(props: HomeProps) {
         return <Users setFilter={setFilter} setUser={setUser} />;
       default:
         return (
-          <ProductList>
-            {plats?.map((plat) => (
-              <div key={plat._id} onClick={() => openDetailProduct(plat)}>
-                <ProductCards plat={plat} />
-              </div>
-            ))}
-          </ProductList>
+          <>
+            <Banner src='/banner.jpeg' alt='imageBanner' />
+            <ProductList>
+              {plats?.map((plat) => (
+                <ProductCards
+                  key={plat._id}
+                  onClick={() => openDetailProduct(plat)}
+                  plat={plat}
+                />
+              ))}
+            </ProductList>
+          </>
         );
     }
   }
@@ -119,21 +124,23 @@ const Main = styled.div`
 `;
 
 const Content = styled.div`
-  margin-top: 100px;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: 0;
+`;
+
+const Banner = styled.img`
+  width: 100vw;
+  height: 400px;
+  object-fit: cover;
 `;
 
 const ProductList = styled.div`
   width: 70%;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 10px;
-  grid-auto-rows: minmax(100px, auto);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   margin: 20px;
-  :hover {
-    cursor: pointer;
-  }
 `;

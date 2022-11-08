@@ -63,6 +63,7 @@ const Main = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
+  z-index: 40;
 `;
 
 const H1Styled = styled(H1)`

@@ -69,14 +69,17 @@ const Main = styled.div`
   flex: 1;
   align-items: center;
   justify-content: center;
+  z-index: 20;
+  overflow-y: scroll;
 `;
 
 const Detail = styled.div<{ $isOpen: boolean }>`
-  position: absolute;
-  height: 100%;
+  position: fixed;
   width: ${({ $isOpen }) => ($isOpen ? '50vw' : '0vw')};
   background-color: white;
+  height: 100vh;
   left: 0;
+  top: 0;
   border-right: solid 1px black;
   transition: all 0.2s;
   overflow: hidden;
