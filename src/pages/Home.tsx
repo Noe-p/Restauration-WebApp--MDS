@@ -59,6 +59,7 @@ export function Home(props: HomeProps) {
   useEffect(() => {
     fetchPlats(filter);
     setIsDetailOpen(false);
+    fetchUser();
   }, [filter, setFilter]);
 
   useEffect(() => {
@@ -68,7 +69,7 @@ export function Home(props: HomeProps) {
   function renderPage(filter: string) {
     switch (filter) {
       case 'account':
-        return <Account setFilter={setFilter} setUser={setUser} />;
+        return <Account setFilter={setFilter} user={user} />;
       case 'plat':
         return <Plat setFilter={setFilter} setUser={setUser} />;
       case 'aliment':
