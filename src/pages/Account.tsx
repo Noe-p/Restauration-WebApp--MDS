@@ -1,6 +1,6 @@
 import { ReactNode, useState } from 'react';
 import styled from 'styled-components';
-import { updateUser } from '../api';
+import { removeUser, updateUser } from '../api';
 import { ErrorMessage, Input, Select, Submit } from '../components';
 import { UserType } from '../type';
 
@@ -9,10 +9,11 @@ interface AccountProps {
   className?: string;
   setFilter: (filter: string) => void;
   user?: UserType;
+  setIsModalOpen?: (v: boolean) => void;
 }
 
 export function Account(props: AccountProps): JSX.Element {
-  const { children, className, user, setFilter } = props;
+  const { children, className, user, setFilter, setIsModalOpen } = props;
   const [username, setUsername] = useState(user ? user.username : '');
   const [role, setRole] = useState(user ? user.role : '');
   const [email, setEmail] = useState(user ? user.email : '');
@@ -42,12 +43,25 @@ export function Account(props: AccountProps): JSX.Element {
         country: country,
       });
       if (res.ok) {
-        setFilter('fetchUser');
+        if (setIsModalOpen) {
+          setIsModalOpen(false);
+        } else {
+          setFilter('fetchUser');
+        }
       } else {
         setErrorMessage(res.statusText);
       }
     } else {
       setErrorMessage('Veuillez remplir tous les champs...');
+    }
+  }
+
+  async function onRemoveUser() {
+    if (user?.id) await removeUser(user.id);
+    if (setIsModalOpen) {
+      setIsModalOpen(false);
+    } else {
+      setFilter('fetchUser');
     }
   }
 
@@ -106,7 +120,10 @@ export function Account(props: AccountProps): JSX.Element {
         </Right>
       </Inputs>
       <ErrorMessage>{errorMessage}</ErrorMessage>
-      <SubmitStyled onClick={onRegister}>Modifier</SubmitStyled>
+      <SubmitContainer>
+        <SubmitStyled onClick={onRegister}>Modifier</SubmitStyled>
+        <RemoveStyled onClick={() => onRemoveUser()}>Suprimer</RemoveStyled>
+      </SubmitContainer>
     </Main>
   );
 }
@@ -142,5 +159,18 @@ const Right = styled.div`
 
 const SubmitStyled = styled(Submit)`
   margin-top: 10px;
-  width: 50%;
+  width: 40%;
+`;
+
+const SubmitContainer = styled.div`
+  margin-top: 30px;
+  display: flex;
+  width: 80%;
+  justify-content: space-around;
+`;
+
+const RemoveStyled = styled(SubmitStyled)`
+  :hover {
+    background-color: brown;
+  }
 `;

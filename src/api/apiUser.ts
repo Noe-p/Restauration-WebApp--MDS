@@ -1,7 +1,7 @@
 import { removeCookie, setCookie } from '../services/cookies';
 import { UserApiType } from '../type';
 import { UserType } from './../type/UserType';
-import { get, post, put } from './api';
+import { get, post, put, remove } from './api';
 
 function renderUser(user: UserApiType): UserType {
   return {
@@ -69,4 +69,8 @@ export async function createUser(
 export async function updateUser(user: UserType): Promise<Response> {
   const req = await put(`user/update`, user);
   return req;
+}
+
+export async function removeUser(id: string) {
+  await remove(`users/${id}`);
 }
