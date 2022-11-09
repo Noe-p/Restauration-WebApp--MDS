@@ -14,7 +14,7 @@ interface NavbarProps {
   setFilter: (filter: string) => void;
   user?: UserType;
   setUser: (user: UserType | undefined) => void;
-  setIsModalOpen: (v: boolean) => void;
+  setIsLoginModalOpen: (v: boolean) => void;
   shoppingEle?: PlatType;
   setShoppingEle: (v: undefined) => void;
 }
@@ -24,7 +24,7 @@ export function Navbar(props: NavbarProps): JSX.Element {
     children,
     className,
     filter,
-    setIsModalOpen,
+    setIsLoginModalOpen,
     setFilter,
     setUser,
     user,
@@ -84,11 +84,13 @@ export function Navbar(props: NavbarProps): JSX.Element {
               <Notif $visible={notif !== 0}>{notif}</Notif>
             </IconContainer>
             <ShoppingCard
+              user={user}
               setShoppingEle={setShoppingEle}
               shoppingEle={shoppingEle}
               isOpen={isShoppingCard}
               setNotif={setNotif}
               setFilter={setFilter}
+              setIsLoginModalOpen={setIsLoginModalOpen}
             />
           </LinkLogin>
         </div>
@@ -154,7 +156,7 @@ export function Navbar(props: NavbarProps): JSX.Element {
             )}
           </div>
         ) : (
-          <LinkLogin onClick={() => setIsModalOpen(true)}>Login</LinkLogin>
+          <LinkLogin onClick={() => setIsLoginModalOpen(true)}>Login</LinkLogin>
         )}
       </RightLinks>
     </Main>
@@ -172,7 +174,7 @@ const Main = styled.div`
   background-color: white;
   border-bottom: solid 1px black;
   position: fixed;
-  z-index: 9999999;
+  z-index: 9999;
 `;
 
 const LeftLinks = styled.div`

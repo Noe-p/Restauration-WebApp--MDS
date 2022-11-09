@@ -15,7 +15,7 @@ export function Home(props: HomeProps) {
   const [plats, setPlats] = useState<PlatType[]>();
   const [filter, setFilter] = useState('');
   const [user, setUser] = useState<UserType | undefined>(undefined);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
   const [productDetail, setProductDetail] = useState<PlatType>();
   const [shoppingPlat, setShoppingPlat] = useState<PlatType>();
@@ -92,7 +92,7 @@ export function Home(props: HomeProps) {
   return (
     <Main>
       <Navbar
-        setIsModalOpen={setIsModalOpen}
+        setIsLoginModalOpen={setIsLoginModalOpen}
         user={user}
         setUser={setUser}
         filter={filter}
@@ -108,8 +108,8 @@ export function Home(props: HomeProps) {
         setShoppingPlat={setShoppingPlat}
       />
       <LoginModal
-        setIsModalOpen={setIsModalOpen}
-        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsLoginModalOpen}
+        isModalOpen={isLoginModalOpen}
         setUser={setUser}
       />
     </Main>

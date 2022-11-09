@@ -1,7 +1,7 @@
 import { getCookie } from '../services/cookies';
 
-// export const url = 'http://localhost:8888/';
-export const url = 'https://restauration-api--mds.herokuapp.com/';
+export const url = 'http://localhost:8888/';
+// export const url = 'https://restauration-api--mds.herokuapp.com/';
 
 export async function get(authenURL: string) {
   return fetch(url + authenURL, {

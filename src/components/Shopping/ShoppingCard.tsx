@@ -6,7 +6,7 @@ import {
   findPlatInPlats,
   incrementPlat,
 } from '../../services/plat';
-import { AlimentType, PlatType } from '../../type';
+import { AlimentType, PlatType, UserType } from '../../type';
 import { Submit } from '../Buttons';
 import { ErrorMessage, H3, P1 } from '../Text';
 
@@ -18,6 +18,8 @@ interface ShoppingCardProps {
   setShoppingEle: (v: undefined) => void;
   setNotif: (v: number) => void;
   setFilter: (v: string) => void;
+  user?: UserType;
+  setIsLoginModalOpen: (v: boolean) => void;
 }
 
 export function ShoppingCard(props: ShoppingCardProps): JSX.Element {
@@ -29,6 +31,9 @@ export function ShoppingCard(props: ShoppingCardProps): JSX.Element {
     shoppingEle,
     setNotif,
     setShoppingEle,
+    setIsLoginModalOpen,
+
+    user,
   } = props;
   const [shoppingList, setShoppingList] = useState<
     {
@@ -48,11 +53,24 @@ export function ShoppingCard(props: ShoppingCardProps): JSX.Element {
         setShoppingList(incrementPlat(index, shoppingList));
       } else {
         setShoppingList([...shoppingList, { plat: shoppingEle, quantite: 1 }]);
-        setNotif(shoppingList.length + 1);
       }
     }
+    setNotif(shoppingList.length);
+
     setShoppingEle(undefined);
   }, [shoppingEle, setShoppingEle, shoppingList, setNotif]);
+
+  useEffect(() => {
+    if (shoppingList.length !== 0)
+      sessionStorage.setItem('shoppingCard', JSON.stringify(shoppingList));
+  }, [shoppingList]);
+
+  useEffect(() => {
+    const shop = sessionStorage.getItem('shoppingCard');
+    if (shop) {
+      setShoppingList(JSON.parse(shop));
+    }
+  }, []);
 
   async function updateAli(aliment: AlimentType, quantite: number) {
     await updateAliment({
@@ -62,23 +80,27 @@ export function ShoppingCard(props: ShoppingCardProps): JSX.Element {
   }
 
   async function onSubmit() {
-    shoppingList.forEach(async (plat) => {
-      await updatePlat({
-        ...plat.plat,
-        aliments: await Promise.all(
-          plat.plat.aliments.map(async (aliment) => {
-            await updateAli(aliment.detail, plat.quantite);
-            return {
-              quantite: aliment.quantite,
-              alimentId: aliment.detail._id,
-            };
-          })
-        ),
+    if (user) {
+      shoppingList.forEach(async (plat) => {
+        await updatePlat({
+          ...plat.plat,
+          aliments: await Promise.all(
+            plat.plat.aliments.map(async (aliment) => {
+              await updateAli(aliment.detail, plat.quantite);
+              return {
+                quantite: aliment.quantite,
+                alimentId: aliment.detail._id,
+              };
+            })
+          ),
+        });
       });
-    });
-    setShoppingList([]);
-    setNotif(0);
-    setFilter('fetchPlats');
+      setShoppingList([]);
+      setNotif(0);
+      setFilter('fetchPlats');
+    } else {
+      setIsLoginModalOpen(true);
+    }
   }
 
   return (

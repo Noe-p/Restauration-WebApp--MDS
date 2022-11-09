@@ -36,7 +36,7 @@ const Main = styled.div<{ $isHover?: boolean }>`
   margin: 10px;
   position: relative;
   width: 300px;
-  height: 300px;
+  height: 200px;
   border-radius: 7px;
   display: flex;
   padding: 15px;
