@@ -170,7 +170,7 @@ const Main = styled.div`
   justify-content: center;
   flex-direction: column;
   width: 100%;
-  margin-top: 10px;
+  margin-top: 110px;
 `;
 
 const Container = styled.div`

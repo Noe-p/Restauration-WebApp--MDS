@@ -90,7 +90,7 @@ export function Aliment(props: AlimentProps): JSX.Element {
         {update ? (
           children
         ) : (
-          <SubmitStyled onClick={createAliment}>Ajouter le plat</SubmitStyled>
+          <SubmitStyled onClick={createAliment}>Ajouter l'aliment</SubmitStyled>
         )}
       </SubmitContainer>
     </Main>
@@ -103,7 +103,7 @@ const Main = styled.div`
   justify-content: center;
   flex-direction: column;
   width: 50%;
-  margin-top: 10px;
+  margin-top: 110px;
 `;
 
 const InputStyled = styled(Input)`

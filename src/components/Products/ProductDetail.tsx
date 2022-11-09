@@ -1,9 +1,8 @@
-import { ExclamationTriangleIcon } from '@heroicons/react/24/solid';
 import { ReactNode, useState } from 'react';
 import styled from 'styled-components';
 import { PlatType } from '../../type';
 import { Submit } from '../Buttons';
-import { ErrorMessage, H1, H3, P1, P2 } from '../Text';
+import { ErrorMessage, H1, H3, P1 } from '../Text';
 
 interface ProductDetailProps {
   children?: ReactNode;
@@ -43,18 +42,20 @@ export function ProductDetail(props: ProductDetailProps): JSX.Element {
   return (
     <Main className={className}>
       <Detail $isOpen={isOpen}>
-        <H1>{productDetail?.nom}</H1>
-        <Image src={productDetail?.image} alt='image' />
-        <AlimentContainer>
-          {productDetail?.aliments.map((a, i) => (
-            <Element $empty={a.detail?.quantiteInStock <= 0} key={i}>
-              {a.detail?.nom}
-            </Element>
-          ))}
-        </AlimentContainer>
-        <P1Styled>{productDetail?.description}</P1Styled>
-        <H3Styled>Prix : {productDetail?.prix}€</H3Styled>
-        <ErrorMessage>{errorMessage}</ErrorMessage>
+        <Scroll>
+          <H1>{productDetail?.nom}</H1>
+          <Image src={productDetail?.image} alt='image' />
+          <AlimentContainer>
+            {productDetail?.aliments.map((a, i) => (
+              <Element $empty={a.detail?.quantiteInStock <= 0} key={i}>
+                {a.detail?.nom}
+              </Element>
+            ))}
+          </AlimentContainer>
+          <P1Styled>{productDetail?.description}</P1Styled>
+          <H3Styled>Prix : {productDetail?.prix}€</H3Styled>
+          <ErrorMessage>{errorMessage}</ErrorMessage>
+        </Scroll>
         <SubmitStyled onClick={addOnShoppingCard}>
           Ajouter au panier
         </SubmitStyled>
@@ -69,25 +70,37 @@ const Main = styled.div`
   flex: 1;
   align-items: center;
   justify-content: center;
-  z-index: 20;
-  overflow-y: scroll;
+  height: 100vh;
 `;
 
 const Detail = styled.div<{ $isOpen: boolean }>`
   position: fixed;
   width: ${({ $isOpen }) => ($isOpen ? '50vw' : '0vw')};
+  height: 100%;
   background-color: white;
-  height: 100vh;
   left: 0;
   top: 0;
-  border-right: solid 1px black;
   transition: all 0.2s;
   overflow: hidden;
 
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  padding-top: 120px;
+  flex-direction: column;
+  box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+`;
+
+const Scroll = styled.div`
+  z-index: 20;
+  margin-top: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  overflow-y: scroll;
+  width: 100%;
+  height: 75%;
+  box-shadow: rgba(0, 0, 0, 0.09) 0px -50px 36px -20px inset;
 `;
 
 const ClickOutside = styled.div<{ $isOpen: boolean }>`
@@ -95,12 +108,12 @@ const ClickOutside = styled.div<{ $isOpen: boolean }>`
   height: 100%;
   width: ${({ $isOpen }) => ($isOpen ? '50vw' : '0vw')};
   right: 0;
-  opacity: 0;
+  top: 0;
 `;
 
 const Image = styled.img`
   width: 60%;
-  height: 30%;
+  height: 50%;
   border-radius: 10px;
   object-fit: cover;
 `;
@@ -134,31 +147,4 @@ const H3Styled = styled(H3)`
 
 const SubmitStyled = styled(Submit)`
   margin-top: 30px;
-`;
-
-const WarningContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: 25px;
-`;
-const WarningIconOrange = styled(ExclamationTriangleIcon)`
-  width: 20px;
-  margin-right: 10px;
-  color: #fda100;
-`;
-
-const WarningIconRed = styled(ExclamationTriangleIcon)`
-  width: 20px;
-  margin-right: 10px;
-  color: brown;
-`;
-const WarningMessage = styled(P2)`
-  color: green;
-`;
-
-const WarningMessageOrange = styled(WarningMessage)`
-  color: #fda100;
-`;
-const WarningMessageRed = styled(WarningMessage)`
-  color: brown;
 `;

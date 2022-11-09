@@ -185,7 +185,7 @@ export function Stock(props: StockProps): JSX.Element {
         isOpen={isModalPlatOpen}
         onRequestClose={() => setIsModalPlatOpen(false)}
       >
-        <Plat
+        <PlatStyled
           update
           value={updatePlatEle}
           setFilter={setFilter}
@@ -198,7 +198,7 @@ export function Stock(props: StockProps): JSX.Element {
               Suprimer
             </RemoveStyled>
           </SubmitContainer>
-        </Plat>
+        </PlatStyled>
       </Modal>
     </Main>
   );
@@ -210,7 +210,7 @@ const Main = styled.div`
   justify-content: center;
   flex-direction: column;
   width: 90%;
-  margin-top: 10px;
+  margin-top: 110px;
 `;
 
 const Container = styled.div`
@@ -237,6 +237,12 @@ const Container = styled.div`
 
 const AlimentStyled = styled(Aliment)`
   width: 100%;
+  margin-top: 0;
+`;
+
+const PlatStyled = styled(Plat)`
+  width: 100%;
+  margin-top: 0;
 `;
 
 const SubmitContainer = styled.div`

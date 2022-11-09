@@ -151,7 +151,7 @@ const Banner = styled.img`
 `;
 
 const ProductList = styled.div`
-  width: 70%;
+  width: 80%;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
