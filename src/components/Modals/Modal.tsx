@@ -49,4 +49,5 @@ const ModalContainer = styled.div`
   justify-content: center;
   align-items: center;
   padding: 50px;
+  width: 500px;
 `;

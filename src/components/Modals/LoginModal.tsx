@@ -1,6 +1,6 @@
 import { ReactNode, useState } from 'react';
 import styled from 'styled-components';
-import { ErrorMessage, H1, Input, Modal, Submit } from '..';
+import { ErrorMessage, H1, Input, Modal, P1, Submit } from '..';
 import { getUser, userLogin } from '../../api';
 import { UserType } from '../../type';
 
@@ -10,10 +10,18 @@ interface LoginModalProps {
   setUser: (user: UserType | undefined) => void;
   isModalOpen: boolean;
   setIsModalOpen: (v: boolean) => void;
+  setRegister: (v: boolean) => void;
 }
 
 export function LoginModal(props: LoginModalProps): JSX.Element {
-  const { children, className, setUser, isModalOpen, setIsModalOpen } = props;
+  const {
+    children,
+    className,
+    setUser,
+    setRegister,
+    isModalOpen,
+    setIsModalOpen,
+  } = props;
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState<string | undefined>('');
@@ -51,6 +59,14 @@ export function LoginModal(props: LoginModalProps): JSX.Element {
           />
           <ErrorMessage>{errorMessage}</ErrorMessage>
           <SubmitStyled onClick={login}>Se connecter</SubmitStyled>
+          <Anchor
+            onClick={() => {
+              setIsModalOpen(false);
+              setRegister(true);
+            }}
+          >
+            <P1>Créer un compte</P1>
+          </Anchor>
         </LoginContainer>
       </Modal>
     </Main>
@@ -63,6 +79,7 @@ const Main = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
+  z-index: 999999999;
 `;
 
 const H1Styled = styled(H1)`
@@ -84,4 +101,12 @@ const LoginContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: left;
+`;
+
+const Anchor = styled.div`
+  margin-top: 20px;
+
+  :hover {
+    cursor: pointer;
+  }
 `;

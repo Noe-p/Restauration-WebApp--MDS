@@ -2,7 +2,12 @@ import { ReactNode, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Account, Aliment, LoginModal, Plat, Stock, Users } from '.';
 import { getPlatByType, getPlats, getUser } from '../api';
-import { Navbar, ProductCards, ProductDetail } from '../components';
+import {
+  Navbar,
+  ProductCards,
+  ProductDetail,
+  RegisterModal,
+} from '../components';
 import { getCookie } from '../services/cookies';
 import { PlatType, PlatTypeEnum, UserType } from '../type';
 
@@ -19,6 +24,7 @@ export function Home(props: HomeProps) {
   const [isDetailOpen, setIsDetailOpen] = useState(false);
   const [productDetail, setProductDetail] = useState<PlatType>();
   const [shoppingPlat, setShoppingPlat] = useState<PlatType>();
+  const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
 
   async function fetchPlats(filter: string) {
     switch (filter) {
@@ -111,6 +117,12 @@ export function Home(props: HomeProps) {
         setIsModalOpen={setIsLoginModalOpen}
         isModalOpen={isLoginModalOpen}
         setUser={setUser}
+        setRegister={setIsRegisterModalOpen}
+      />
+      <RegisterModal
+        setIsModalOpen={setIsRegisterModalOpen}
+        isModalOpen={isRegisterModalOpen}
+        setLogin={setIsLoginModalOpen}
       />
     </Main>
   );

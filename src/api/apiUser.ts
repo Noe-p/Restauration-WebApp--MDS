@@ -1,5 +1,6 @@
 import { removeCookie, setCookie } from '../services/cookies';
-import { UserApiType, UserType } from '../type';
+import { UserApiType } from '../type';
+import { UserType } from './../type/UserType';
 import { get, post } from './api';
 
 function renderUser(user: UserApiType): UserType {
@@ -7,6 +8,10 @@ function renderUser(user: UserApiType): UserType {
     id: user._id,
     username: user.username,
     role: user.role,
+    address: user.address,
+    email: user.email,
+    phone: user.phone,
+    country: user.country,
   };
 }
 
@@ -50,4 +55,13 @@ export async function logoutUser() {
   await get('logout');
   removeCookie('restauration');
   removeCookie('userId');
+}
+
+export async function createUser(
+  user: UserType & {
+    password: string;
+  }
+): Promise<Response> {
+  const req = await post('signup', user);
+  return req;
 }
